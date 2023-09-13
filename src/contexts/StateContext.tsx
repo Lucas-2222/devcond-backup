@@ -1,5 +1,7 @@
 import React, { createContext, useState, useContext, useCallback }  from "react";
 import { StateProviderProps } from "./StateContext.type";
+import { Login } from "../screens/LoginScreen";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type User = {
   id: number;
@@ -8,39 +10,41 @@ type User = {
 
 type Property = {
 	id: number;
+  name: string;
 }
 
 interface PropsState {
-	token: string;
-	property: Property;
-  user: User;
-  handleUser(user: User): void
+  user: Login;
+  property: Property[];
+  handleProperty(property: Property[]): void;
+  handleUser(user: Login): void;
 }
 
 const StateContext = createContext<PropsState>({} as PropsState );
 
-const initalUser: User = {
-	id:10,
-	nome: 'Vinicius'
-}
 
 const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>(initalUser);
-	const [token, setToken] = useState<string>('');
-	const [property, setProperty] = useState<Property>({} as Property);
+  const [user, setUser] = useState<Login>({} as Login);
+  const [property, setProperty] = useState<Property[]>([]);
 
-  const handleUser = useCallback((user: User)=> {
+  const handleUser = useCallback((user: Login)=> {
+    AsyncStorage.setItem('token', user.token)
 		setUser(user);
 
   },[]);
 
+  const handleProperty =  useCallback( async (property: Property[])=>{
+    await AsyncStorage.setItem('property', JSON.stringify(property))
+    setProperty(property);
+  },[])
+
   return(
     <StateContext.Provider
       value={{
-				token,
         user,
-				property,
-        handleUser
+        handleUser,
+        property,
+        handleProperty
       }} 
     >
       {children}
