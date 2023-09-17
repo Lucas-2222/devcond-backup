@@ -1,4 +1,5 @@
 import React,{ useEffect, useState } from 'react'
+import {GestureHandlerRootView, GestureDetector} from 'react-native-gesture-handler';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./ChoosePropertyScreen.style";
 import { useStateUser, Property } from '../../contexts/StateContext';
@@ -39,7 +40,8 @@ const ChoosePropertyScreen = ({navigation}:NativeStackScreenProps<any>) => {
 	},[])
 
   return(
-    <C.Container>
+		<GestureHandlerRootView style={{flex:1}}>
+			<C.Container>
 				<C.Scroller>
 					{loading &&
 						<C.LoadingIcon color="#8863E6" size="large"/>
@@ -69,7 +71,8 @@ const ChoosePropertyScreen = ({navigation}:NativeStackScreenProps<any>) => {
 						<C.ExitButtonText>Sair</C.ExitButtonText>
 					</C.ExitButtonArea>
 				
-    </C.Container>
+    	</C.Container>
+		</GestureHandlerRootView>
   )
 }
 

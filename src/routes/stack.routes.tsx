@@ -1,3 +1,4 @@
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PreloadScreen } from "../screens/PreloadScreen/";
 import { LoginScreen } from "../screens/LoginScreen";
@@ -8,14 +9,16 @@ const Stack = createNativeStackNavigator();
 
 const StackRoutes = () => {
   return(
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false, }}>
       <Stack.Screen 
           name='PreloadScreen'
           component={PreloadScreen}
+          gestureEnabled={true}
       />
       <Stack.Screen 
           name='LoginScreen'
           component={LoginScreen}
+          gestureEnabled={true}
       />
       <Stack.Screen 
           name='RegisterScreen'
