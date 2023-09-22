@@ -46,5 +46,19 @@ export const request = async <T>(method: string, endpoint: string, params?: Reco
 export default {
   getToken: async () => {
     return await AsyncStorage.getItem('token');
+  },
+  logout: async () => {
+    let token = await AsyncStorage.getItem('token');
+    let json = await request('post', '/auth/logout', {});
+    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('property');
+    return json;
+  },
+  getWall: async () => {
+    let token = await AsyncStorage.getItem('token');
+    let json = await request('get', '/walls', {});
+    return json;
   }
-}
+};
+
+

@@ -15,8 +15,8 @@ type Property = {
 
 interface PropsState {
   user: Login;
-  property: Property[];
-  handleProperty(property: Property[]): void;
+  property: Property;
+  handleProperty(property: Property): void;
   handleUser(user: Login): void;
 }
 
@@ -25,7 +25,7 @@ const StateContext = createContext<PropsState>({} as PropsState );
 
 const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
   const [user, setUser] = useState<Login>({} as Login);
-  const [property, setProperty] = useState<Property[]>([]);
+  const [property, setProperty] = useState<Property>({} as Property);
 
   const handleUser = useCallback((user: Login)=> {
     AsyncStorage.setItem('token', user.token)
@@ -33,7 +33,7 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
 
   },[]);
 
-  const handleProperty =  useCallback( async (property: Property[])=>{
+  const handleProperty =  useCallback( async (property: Property)=>{
     await AsyncStorage.setItem('property', JSON.stringify(property))
     setProperty(property);
   },[])

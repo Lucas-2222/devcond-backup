@@ -1,27 +1,27 @@
 import React,{ useEffect, useState } from 'react'
-import {GestureHandlerRootView, GestureDetector} from 'react-native-gesture-handler';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./ChoosePropertyScreen.style";
 import { useStateUser, Property } from '../../contexts/StateContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ServicesLogin } from './ChoosePropertyScreen.services';
+import api from '../../services/api';
 
-const ChoosePropertyScreen = ({navigation}:NativeStackScreenProps<any>) => {
-	const { logout } = ServicesLogin;
+type Props = NativeStackScreenProps<any>
+
+const ChoosePropertyScreen: React.FC<Props> = ({navigation, routes}) => {
 	const { user, handleProperty } = useStateUser();
 	const [loading, setLoading] = useState(true);
 
 	const handleLogoutButton = async  () => {
-		await logout();
+		await api.logout();
 		navigation.reset({
 			index: 1,
 			routes: [{name: 'LoginScreen'}]
 		})
 	};
 
-	const chooseProperty = async (property: Property[]) => {
+	const chooseProperty = async (property: Property) => {
 		handleProperty(property)
-
 		navigation.reset({
 			index: 1,
 			routes:[{name: 'MainDrawer'}]
@@ -40,7 +40,7 @@ const ChoosePropertyScreen = ({navigation}:NativeStackScreenProps<any>) => {
 	},[])
 
   return(
-		<GestureHandlerRootView style={{flex:1}}>
+
 			<C.Container>
 				<C.Scroller>
 					{loading &&
@@ -53,8 +53,8 @@ const ChoosePropertyScreen = ({navigation}:NativeStackScreenProps<any>) => {
 
 							<C.PropertyList>
 									{user.properties.map((item, index)=>(
-										<C.ButtonArea key={index} onPress={()=>{}}>
-											<C.ButtonText>{item.name}</C.ButtonText>
+										<C.ButtonArea onPress={()=>chooseProperty(item)} key={index}>
+											<C.ButtonText >{item.name}</C.ButtonText>
 										</C.ButtonArea>
 									))}
 							</C.PropertyList>
@@ -72,7 +72,7 @@ const ChoosePropertyScreen = ({navigation}:NativeStackScreenProps<any>) => {
 					</C.ExitButtonArea>
 				
     	</C.Container>
-		</GestureHandlerRootView>
+		
   )
 }
 

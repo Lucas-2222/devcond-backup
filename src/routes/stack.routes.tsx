@@ -5,20 +5,19 @@ import { LoginScreen } from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen/RegisterScreen";
 import { ChoosePropertyScreen } from "../screens/ChoosePropertyScreen";
 
+import  MainDrawer  from "./MainDrawer";
 const Stack = createNativeStackNavigator();
 
 const StackRoutes = () => {
   return(
-    <Stack.Navigator screenOptions={{ headerShown: false, }}>
+    <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: true, customAnimationOnGesture: true, fullScreenGestureEnabled: true }}>
       <Stack.Screen 
           name='PreloadScreen'
           component={PreloadScreen}
-          gestureEnabled={true}
-      />
+      />  
       <Stack.Screen 
           name='LoginScreen'
           component={LoginScreen}
-          gestureEnabled={true}
       />
       <Stack.Screen 
           name='RegisterScreen'
@@ -30,6 +29,12 @@ const StackRoutes = () => {
           component={ChoosePropertyScreen}
           options={{headerShown: false}}
       />
+      <Stack.Screen 
+          name='MainDrawer'
+          component={MainDrawer}
+          options={{headerShown: false}}
+      />
+
     </Stack.Navigator>
   );
 }
