@@ -1,0 +1,270 @@
+{
+  "uuid": "2811832f-3373-4ed5-a093-5faa90bd1d93",
+  "lastMigration": 27,
+  "name": "Devcond",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3003,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+      {
+          "uuid": "74022a85-f72d-4e1e-9c58-120eca4c50d1",
+          "type": "http",
+          "documentation": "",
+          "method": "post",
+          "endpoint": "auth/validate",
+          "responses": [
+              {
+                  "uuid": "c0d8261b-67bc-47a9-b0fa-6f5a37594798",
+                  "body": "{\n  \"error\": \"\",\n  \"login\": {\n    \"token\": \"afdasdasdasdasdasdasdasdasdasdasd\",\n    \"id\": 1,\n    \"name\": \"Lucas\",\n    \"email\": \"lucas@teste.com\",\n    \"cpf\": \"12345678911\",\n    \"password\": \"1234\",\n    \"properties\": [\n      {\n        \"id\": 2,\n        \"name\": \"APT 200\"\n      },\n      {\n        \"id\": 3,\n        \"name\": \"APT 400\"\n      }\n    ]\n  }\n}",
+                  "latency": 1000,
+                  "statusCode": 200,
+                  "label": "",
+                  "headers": [],
+                  "bodyType": "INLINE",
+                  "filePath": "",
+                  "databucketID": "",
+                  "sendFileAsBody": false,
+                  "rules": [],
+                  "rulesOperator": "OR",
+                  "disableTemplating": false,
+                  "fallbackTo404": false,
+                  "default": true
+              }
+          ],
+          "enabled": true,
+          "responseMode": null
+      },
+      {
+          "uuid": "6a1a58e5-a2b8-4f10-a584-938f3aa3effc",
+          "type": "http",
+          "documentation": "",
+          "method": "post",
+          "endpoint": "auth/validateLogin",
+          "responses": [
+              {
+                  "uuid": "1eec03f1-b5a1-4758-9c25-19da7f968582",
+                  "body": "{\n  \"error\": \"\",\n  \"token\": \"afdasdasdasdasdasdasdasdasdasdasd\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Lucas\",\n    \"email\": \"lucas@teste.com\",\n    \"cpf\": \"12345678911\",\n    \"password\": \"1234\",\n    \"properties\": [\n      {\n        \"id\": 2,\n        \"name\": \"APT 200\"\n      },\n      {\n        \"id\": 3,\n        \"name\": \"APT 400\"\n      }\n    ]\n  }\n}",
+                  "latency": 1000,
+                  "statusCode": 200,
+                  "label": "",
+                  "headers": [],
+                  "bodyType": "INLINE",
+                  "filePath": "",
+                  "databucketID": "",
+                  "sendFileAsBody": false,
+                  "rules": [],
+                  "rulesOperator": "OR",
+                  "disableTemplating": false,
+                  "fallbackTo404": false,
+                  "default": true
+              }
+          ],
+          "enabled": true,
+          "responseMode": null
+      },
+      {
+          "uuid": "f9a94751-2ad6-41e0-97e4-cf4886cc9f99",
+          "type": "http",
+          "documentation": "",
+          "method": "post",
+          "endpoint": "auth/register",
+          "responses": [
+              {
+                  "uuid": "4648a22c-cca8-4a95-9f16-3dbc393f05f9",
+                  "body": "{\n  \"error\": \"\",\n  \"token\": \"afdasdasdasdasdasdasdasdasdasdasd\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Lucas\",\n    \"email\": \"lucas@teste.com\",\n    \"cpf\": \"12345678911\",\n    \"password\": \"1234\"\n  }\n}",
+                  "latency": 1000,
+                  "statusCode": 200,
+                  "label": "",
+                  "headers": [],
+                  "bodyType": "INLINE",
+                  "filePath": "",
+                  "databucketID": "",
+                  "sendFileAsBody": false,
+                  "rules": [],
+                  "rulesOperator": "OR",
+                  "disableTemplating": false,
+                  "fallbackTo404": false,
+                  "default": true
+              }
+          ],
+          "enabled": true,
+          "responseMode": null
+      },
+      {
+          "uuid": "3394c50c-b245-4c04-9043-f3de302124bb",
+          "type": "http",
+          "documentation": "",
+          "method": "post",
+          "endpoint": "auth/logout",
+          "responses": [
+              {
+                  "uuid": "6d135d50-80b0-47ba-ab98-6759a63ef299",
+                  "body": "{\n  \"error\": \"\",\n  \"token\": \"afdasdasdasdasdasdasdasdasdasdasd\",\n  \"user\": {\n    \"id\": 1,\n    \"name\": \"Lucas\",\n    \"email\": \"lucas@teste.com\",\n    \"cpf\": \"12345678911\",\n    \"password\": \"1234\"\n  }\n}",
+                  "latency": 1000,
+                  "statusCode": 200,
+                  "label": "",
+                  "headers": [],
+                  "bodyType": "INLINE",
+                  "filePath": "",
+                  "databucketID": "",
+                  "sendFileAsBody": false,
+                  "rules": [],
+                  "rulesOperator": "OR",
+                  "disableTemplating": false,
+                  "fallbackTo404": false,
+                  "default": true
+              }
+          ],
+          "enabled": true,
+          "responseMode": null
+      },
+      {
+          "uuid": "eac120ef-16c9-4844-89dd-ade7c7ba058f",
+          "type": "http",
+          "documentation": "",
+          "method": "get",
+          "endpoint": "walls",
+          "responses": [
+              {
+                  "uuid": "745466ee-cee4-4170-b5a5-12d17c085f5f",
+                  "body": " {\n  \"data\":[\n    {\n      \"id\":2,\n      \"title\":\"Teste\",\n      \"dateCreated\": \"20/12/1990 14:00\",\n      \"body\":\"nana linda\",\n      \"likes\":1,\n      \"liked\":true\n      \n    },\n    {\n      \"id\":1,\n      \"title\":\"Teste2\",\n      \"dateCreated\": \"10/10/2021 11:00\",\n      \"body\":\"BBBBBBBBBBBBBBB\",\n      \"likes\":232,\n      \"liked\":false\n      \n    },\n    {\n      \"id\":1,\n      \"title\":\"Teste2\",\n      \"dateCreated\": \"10/10/2021 11:00\",\n      \"body\":\"BBBBBBBBBBBBBBB\",\n      \"likes\":234,\n      \"liked\":false\n      \n    },\n    {\n      \"id\":1,\n      \"title\":\"Teste2\",\n      \"dateCreated\": \"10/10/2021 11:00\",\n      \"body\":\"BBBBBBBBBBBBBBB\",\n      \"likes\":121,\n      \"liked\":true\n      \n    }\n  ],\n  \"error\":\"\"\n}\n",
+                  "latency": 1000,
+                  "statusCode": 200,
+                  "label": "",
+                  "headers": [],
+                  "bodyType": "INLINE",
+                  "filePath": "",
+                  "databucketID": "",
+                  "sendFileAsBody": false,
+                  "rules": [],
+                  "rulesOperator": "OR",
+                  "disableTemplating": false,
+                  "fallbackTo404": false,
+                  "default": true
+              }
+          ],
+          "enabled": true,
+          "responseMode": null
+      },
+      {
+          "uuid": "6b6ec8d3-1055-4c49-b8c3-31d41b0e63e1",
+          "type": "http",
+          "documentation": "",
+          "method": "post",
+          "endpoint": "wall/:id/like",
+          "responses": [
+              {
+                  "uuid": "3194a1ca-c561-459f-87ce-02d32dc2813c",
+                  "body": " {\n    \"error\":\"\",\n    \"id\":2 ,\n    \"likes\": 2,\n    \"liked\":true\n  }\n",
+                  "latency": 1000,
+                  "statusCode": 200,
+                  "label": "",
+                  "headers": [],
+                  "bodyType": "INLINE",
+                  "filePath": "",
+                  "databucketID": "",
+                  "sendFileAsBody": false,
+                  "rules": [],
+                  "rulesOperator": "OR",
+                  "disableTemplating": false,
+                  "fallbackTo404": false,
+                  "default": true
+              }
+          ],
+          "enabled": true,
+          "responseMode": null
+      },
+      {
+          "uuid": "e1cbb3c4-f28b-46b3-8fd4-c38b0c32a1c7",
+          "type": "http",
+          "documentation": "",
+          "method": "get",
+          "endpoint": "docs",
+          "responses": [
+              {
+                  "uuid": "f9859f4c-7c24-4f1f-a02e-717886f50b8d",
+                  "body": " {\n  \"data\":[\n    {\n      \"id\":2,\n      \"title\":\"Regras do condomínio\",\n      \"fileurl\":\"https://andreazimoreira.com.br/wp-content/uploads/2020/09/Manual-Pratico-de-Regras-para-Pequenos-e-Medios-Condominios.pdf\"\n      \n    },\n    {\n      \"id\":1,\n      \"title\":\"Academia\",\n      \"fileurl\":\"https://andreazimoreira.com.br/wp-content/uploads/2020/09/Manual-Pratico-de-Regras-para-Pequenos-e-Medios-Condominios.pdf\"\n      \n    },\n    {\n      \"id\":3,\n      \"title\":\"Piscina\",\n      \"fileurl\":\"https://andreazimoreira.com.br/wp-content/uploads/2020/09/Manual-Pratico-de-Regras-para-Pequenos-e-Medios-Condominios.pdf\"\n      \n    },\n    {\n      \"id\":5,\n      \"title\":\"Churrasqueira\",\n      \"fileurl\":\"https://andreazimoreira.com.br/wp-content/uploads/2020/09/Manual-Pratico-de-Regras-para-Pequenos-e-Medios-Condominios.pdf\"\n      \n    }\n  ],\n  \"error\":\"\"\n}\n",
+                  "latency": 1000,
+                  "statusCode": 200,
+                  "label": "",
+                  "headers": [],
+                  "bodyType": "INLINE",
+                  "filePath": "",
+                  "databucketID": "",
+                  "sendFileAsBody": false,
+                  "rules": [],
+                  "rulesOperator": "OR",
+                  "disableTemplating": false,
+                  "fallbackTo404": false,
+                  "default": true
+              }
+          ],
+          "enabled": true,
+          "responseMode": null
+      }
+  ],
+  "rootChildren": [
+      {
+          "type": "route",
+          "uuid": "74022a85-f72d-4e1e-9c58-120eca4c50d1"
+      },
+      {
+          "type": "route",
+          "uuid": "6a1a58e5-a2b8-4f10-a584-938f3aa3effc"
+      },
+      {
+          "type": "route",
+          "uuid": "f9a94751-2ad6-41e0-97e4-cf4886cc9f99"
+      },
+      {
+          "type": "route",
+          "uuid": "3394c50c-b245-4c04-9043-f3de302124bb"
+      },
+      {
+          "type": "route",
+          "uuid": "eac120ef-16c9-4844-89dd-ade7c7ba058f"
+      },
+      {
+          "type": "route",
+          "uuid": "6b6ec8d3-1055-4c49-b8c3-31d41b0e63e1"
+      },
+      {
+          "type": "route",
+          "uuid": "e1cbb3c4-f28b-46b3-8fd4-c38b0c32a1c7"
+      }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+      "enabled": false,
+      "type": "CERT",
+      "pfxPath": "",
+      "certPath": "",
+      "keyPath": "",
+      "caPath": "",
+      "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+      {
+          "key": "Content-Type",
+          "value": "application/json"
+      }
+  ],
+  "proxyReqHeaders": [
+      {
+          "key": "",
+          "value": ""
+      }
+  ],
+  "proxyResHeaders": [
+      {
+          "key": "",
+          "value": ""
+      }
+  ],
+  "data": []
+}

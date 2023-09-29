@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PropLikes, PropWalls } from '../contexts/StateContext';
 
 const baseUrl = 'http://192.168.0.103:3003';
 
@@ -54,9 +55,9 @@ export default {
     await AsyncStorage.removeItem('property');
     return json;
   },
-  getWall: async () => {
+  likeWallPost: async (id: number): Promise<PropLikes> => {
     let token = await AsyncStorage.getItem('token');
-    let json = await request('get', '/walls', {});
+    let json = await request<PropLikes>('post', `/wall/${id}/like`, {});
     return json;
   }
 };

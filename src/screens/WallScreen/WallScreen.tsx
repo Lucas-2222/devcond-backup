@@ -1,33 +1,36 @@
 import React,{ useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./WallScreen.style";
-import { useStateUser } from '../../contexts/StateContext';
+import { PropWalls, Walls, useStateUser } from '../../contexts/StateContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ServicesLogin } from './WallScreen.services';
 import api from '../../services/api';
+import WallItem from '../../components/WallItem';
 
 type Props = NativeStackScreenProps<any>
 
+
+
 const WallScreen: React.FC<Props> = ({navigation, routes}) => {
-	const { logout } = ServicesLogin;
+	const { logout, getWall } = ServicesLogin;
 	const { user, handleProperty } = useStateUser();
 
 	const [loading, setLoading] = useState(true);
-	const [wallList, setWallList] = useState([]);
+	const [wallList, setWallList] = useState<Walls[]>([] as Walls[]);
 
 	useEffect(()=>{
 		navigation.setOptions({
 			headerTitle: 'Mural de Avisos'
 		});
-		getWall();
+		getWalls();
 	}, [])
 
-	const getWall = async () => {
+	const getWalls = async () => {
 		setLoading(true);
-		const result = await api.getWall();
+		const result = await getWall();
 		setLoading(false);
 		if(result.error === '') {
-			setWallList(result.list)
+			setWallList(result.data)
 		} else {
 			console.log(result.error);
 		}
@@ -35,14 +38,18 @@ const WallScreen: React.FC<Props> = ({navigation, routes}) => {
 
   return(
 		<C.Container>
-				{loading &&
-					<C.LoadingIcon color="#8863E6" size="large"/>
-				}
 				{!loading && wallList.length === 0 && 
 					<C.NoListArea>
 						<C.NoListText>Não há avisos.</C.NoListText>
 					</C.NoListArea>
 				}
+				<C.List 
+					data={wallList}
+					onRefresh={getWall}
+					refreshing={loading}
+					renderItem={({item}) => (<WallItem {...item} />)}
+					keyExtractor={({item})=> item?.id.toString() }
+				/>
     </C.Container>		
   )
 }

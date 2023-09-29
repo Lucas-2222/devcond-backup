@@ -18,6 +18,45 @@ interface PropsState {
   property: Property;
   handleProperty(property: Property): void;
   handleUser(user: Login): void;
+  walls: PropWalls;
+  handleWalls(walls: Walls): void;
+  docs: PropDocs;
+  handleDocs(docs: Docs): void;
+}
+
+export type PropWalls = {
+  data: Walls[];
+  error: string;
+}
+
+export type Walls = {
+  id: number;
+  title: string;
+  dateCreated: string;
+  body: string;
+  likes: number;
+  liked: boolean;
+}
+
+export interface PropLikes extends Likes {
+  error: string;
+}
+
+export type Likes = {
+  likes: number;
+  liked: boolean;
+  id: number;
+}
+
+export type PropDocs = {
+  data: Docs[];
+  error: string;
+}
+
+export type Docs= {
+  id: number;
+  title: string;
+  fileurl: string;
 }
 
 const StateContext = createContext<PropsState>({} as PropsState );
@@ -26,6 +65,8 @@ const StateContext = createContext<PropsState>({} as PropsState );
 const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
   const [user, setUser] = useState<Login>({} as Login);
   const [property, setProperty] = useState<Property>({} as Property);
+  const [walls, setWalls] = useState<PropWalls>({} as PropWalls);
+  const [docs, setDocs] = useState<PropDocs>({} as PropDocs);
 
   const handleUser = useCallback((user: Login)=> {
     AsyncStorage.setItem('token', user.token)
@@ -36,7 +77,23 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
   const handleProperty =  useCallback( async (property: Property)=>{
     await AsyncStorage.setItem('property', JSON.stringify(property))
     setProperty(property);
-  },[])
+  },[]);
+
+  const handleWalls = useCallback( async (walls: Walls)=>{
+    await AsyncStorage.setItem('walls', JSON.stringify(walls))
+    setWalls(prevState=>({
+      ...prevState,
+      walls
+    }));
+  }, []);
+
+  const handleDocs = useCallback( async (docs: Docs)=>{
+    await AsyncStorage.setItem('docs', JSON.stringify(docs))
+    setDocs(prevState=>({
+      ...prevState,
+      docs
+    }));
+  }, []);
 
   return(
     <StateContext.Provider
@@ -44,7 +101,11 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
         user,
         handleUser,
         property,
-        handleProperty
+        handleProperty,
+        walls,
+        handleWalls,
+        docs,
+        handleDocs
       }} 
     >
       {children}
