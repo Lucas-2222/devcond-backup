@@ -27,7 +27,7 @@ const WarningAddScreen: React.FC<Props> = ({navigation, routes}) => {
 			<C.Scroller>
 				<C.Title>Descreva a ocorrência</C.Title>
 				<C.Field 
-					placeholder="Ex: Vizinho está fazendo barulho."
+					placeholder="Ex:  Vizinho está fazendo barulho."
 					value={warnText}
 					onChangeText={(text: string)=>setWarnText(text)}
 				/>
