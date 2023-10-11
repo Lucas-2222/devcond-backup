@@ -22,6 +22,8 @@ interface PropsState {
   handleWalls(walls: Walls): void;
   docs: PropDocs;
   handleDocs(docs: Docs): void;
+  warns: PropWarns;
+  handleWarns(warns: Warns): void;
 }
 
 export type PropWalls = {
@@ -59,6 +61,26 @@ export type Docs= {
   fileurl: string;
 }
 
+export type PropWarns = {
+  data: Warns[];
+  error: string;
+}
+
+type Photos = {
+  url: string;
+}
+
+export type Warns = {
+  id: number;
+  title: string;
+  status: string;
+  dateCreated: string;
+  photos: Photos[];
+}
+
+
+
+
 const StateContext = createContext<PropsState>({} as PropsState );
 
 
@@ -67,6 +89,7 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
   const [property, setProperty] = useState<Property>({} as Property);
   const [walls, setWalls] = useState<PropWalls>({} as PropWalls);
   const [docs, setDocs] = useState<PropDocs>({} as PropDocs);
+  const [warns, setWarns] = useState<PropWarns>({} as PropWarns);
 
   const handleUser = useCallback((user: Login)=> {
     AsyncStorage.setItem('token', user.token)
@@ -95,6 +118,15 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
     }));
   }, []);
 
+  const handleWarns = useCallback( async (warns: Warns)=>{
+    await AsyncStorage.setItem('warns', JSON.stringify(warns))
+    setDocs(prevState=>({
+      ...prevState,
+      warns
+    }));
+  }, []);
+
+
   return(
     <StateContext.Provider
       value={{
@@ -105,7 +137,9 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
         walls,
         handleWalls,
         docs,
-        handleDocs
+        handleDocs,
+        warns,
+        handleWarns
       }} 
     >
       {children}

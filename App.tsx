@@ -2,6 +2,9 @@ import {GestureHandlerRootView, GestureDetector, Gesture} from 'react-native-ges
 import Routes from "./src/routes";
 import { StateProvider } from "./src/contexts/StateContext";
 import React from 'react';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreAllLogs();
 
 
 const App = () => {

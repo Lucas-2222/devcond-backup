@@ -6,6 +6,7 @@ import RegisterScreen from "../screens/RegisterScreen/RegisterScreen";
 import { ChoosePropertyScreen } from "../screens/ChoosePropertyScreen";
 
 import  MainDrawer  from "./MainDrawer";
+import { WarningAddScreen } from "../screens/WarningAddScreen";
 const Stack = createNativeStackNavigator();
 
 const StackRoutes = () => {
@@ -34,7 +35,6 @@ const StackRoutes = () => {
           component={MainDrawer}
           options={{headerShown: false}}
       />
-
     </Stack.Navigator>
   );
 }
