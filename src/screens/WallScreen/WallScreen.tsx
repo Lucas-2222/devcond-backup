@@ -1,19 +1,14 @@
 import React,{ useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./WallScreen.style";
-import { PropWalls, Walls, useStateUser } from '../../contexts/StateContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Walls, useStateUser } from '../../contexts/StateContext';
 import { ServicesLogin } from './WallScreen.services';
-import api from '../../services/api';
 import WallItem from '../../components/WallItem';
 
 type Props = NativeStackScreenProps<any>
 
-
-
 const WallScreen: React.FC<Props> = ({navigation, routes}) => {
-	const { logout, getWall } = ServicesLogin;
-	const { user, handleProperty } = useStateUser();
+	const { getWall } = ServicesLogin;
 
 	const [loading, setLoading] = useState(true);
 	const [wallList, setWallList] = useState<Walls[]>([] as Walls[]);

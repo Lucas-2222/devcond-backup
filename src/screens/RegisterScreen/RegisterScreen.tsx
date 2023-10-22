@@ -6,8 +6,6 @@ import { ServicesRegister } from './RegisterScreen.services';
 
 const RegisterScreen = ({navigation}: NativeStackScreenProps<any>) => {
 	const { register } = ServicesRegister;
-
-	const {user, handleUser } = useStateUser();
 	
 	const [name, setName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');

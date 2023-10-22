@@ -24,6 +24,10 @@ interface PropsState {
   handleDocs(docs: Docs): void;
   warns: PropWarns;
   handleWarns(warns: Warns): void;
+  files: PropFile;
+  handleFiles(files: File): void;
+  addWarn: PropAddWarn;
+  handleAddWarn(addWarn: AddWarn): void;
 }
 
 export type PropWalls = {
@@ -78,11 +82,26 @@ export type Warns = {
   photos: Photos[];
 }
 
+export type PropFile = {
+  file: File[];
+  error:  string;
+}
 
+export type File = {
+  photo: string;
+}
 
+export type AddWarn = {
+  title: string;
+  list: string;
+}
+
+export type PropAddWarn = {
+  data: AddWarn[];
+  error: string;
+}
 
 const StateContext = createContext<PropsState>({} as PropsState );
-
 
 const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
   const [user, setUser] = useState<Login>({} as Login);
@@ -90,6 +109,8 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
   const [walls, setWalls] = useState<PropWalls>({} as PropWalls);
   const [docs, setDocs] = useState<PropDocs>({} as PropDocs);
   const [warns, setWarns] = useState<PropWarns>({} as PropWarns);
+  const [files, setFiles] = useState<PropFile>({} as PropFile)
+  const [addWarn, setAddWarn] = useState<PropAddWarn>({} as PropAddWarn)
 
   const handleUser = useCallback((user: Login)=> {
     AsyncStorage.setItem('token', user.token)
@@ -126,6 +147,21 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
     }));
   }, []);
 
+  const handleFiles = useCallback( async (files: File)=> {
+    await AsyncStorage.setItem('files', JSON.stringify(files))
+    setFiles(prevState=>({
+      ...prevState,
+      files
+    }));
+  }, []);
+
+  const handleAddWarn = useCallback( async (addWarn: AddWarn)=>{
+    await AsyncStorage.setItem('addWarn', JSON.stringify(addWarn))
+    setAddWarn(prevState=>({
+      ...prevState,
+      addWarn
+    }))
+  }, []);
 
   return(
     <StateContext.Provider
@@ -139,7 +175,11 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
         docs,
         handleDocs,
         warns,
-        handleWarns
+        handleWarns,
+        files,
+        handleFiles,
+        addWarn,
+        handleAddWarn
       }} 
     >
       {children}

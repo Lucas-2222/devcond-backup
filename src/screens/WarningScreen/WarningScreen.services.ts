@@ -5,7 +5,7 @@ import { useStateUser } from "../../contexts/StateContext";
 
 
 
-const ServicesLogin = {
+const ServicesWarning = {
 
   getWarnings: async (id: number): Promise<PropWarns> => {
     let json: PropWarns = await request('get', '/warnings', {id});
@@ -13,4 +13,4 @@ const ServicesLogin = {
   }
 }
 
-export { ServicesLogin };
+export { ServicesWarning };
