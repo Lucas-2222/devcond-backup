@@ -38,6 +38,16 @@ export default {
         border-color: #CCC;
         border-radius: 5px;
     `,
+    PhotoItem: styled.View`
+        width: 65px;
+        margin-left: 5px;
+        align-items: center; 
+    `,
+    Photo: styled.Image`
+        width: 63px;
+        height: 63px;
+        border-radius: 5px;
+    `,
     ButtonArea: styled.TouchableOpacity`
         background-color: #8863E6;
         padding: 12px;
@@ -50,5 +60,8 @@ export default {
         font-weight: bold;
         color: #FFF;    
     `,
+    RemovePhotoButton: styled.TouchableOpacity`
+        
+    `
 
 }

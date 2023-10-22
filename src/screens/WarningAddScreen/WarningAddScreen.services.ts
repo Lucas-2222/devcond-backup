@@ -1,16 +1,25 @@
-import { request } from "../../services/api";
+import { baseUrl, request } from "../../services/api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {  PropWarns } from "../../contexts/StateContext";
+import {  File, PropFile, PropWarns } from "../../contexts/StateContext";
 import { useStateUser } from "../../contexts/StateContext";
 
+type PropPhotosAdd = {
+	photos: Photos[];
+}
+
+type Photos = {
+	url: string;
+}
 
 
-const ServicesLogin = {
-
-  getWarnings: async (id: number): Promise<PropWarns> => {
-    let json: PropWarns = await request('get', '/warnings', {id});
+const ServicesAddWarning = {
+  addWarning: async (title, list) => {
+    let json = await request('post', '/warning', {
+      title,
+      list
+    });
     return json;
   }
 }
 
-export { ServicesLogin };
+export { ServicesAddWarning };

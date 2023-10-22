@@ -1,10 +1,8 @@
 import React,{ useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./BilletScreen.style";
-import { Docs, PropWalls, Walls, useStateUser } from '../../contexts/StateContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Docs, useStateUser } from '../../contexts/StateContext';
 import { ServicesLogin } from './BilletScreen.services';
-import api from '../../services/api';
 import BilletItem from '../../components/BilletItem';
 
 type Props = NativeStackScreenProps<any>

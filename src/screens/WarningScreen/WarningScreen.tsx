@@ -3,14 +3,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./WarningScreen.style";
 import { Warns, useStateUser } from '../../contexts/StateContext';
 import Icon  from 'react-native-vector-icons/FontAwesome';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ServicesLogin } from './WarningScreen.services';
+import { ServicesWarning } from './WarningScreen.services';
 import WarnItem from '../../components/WarnItem';
 
 type Props = NativeStackScreenProps<any>
 
 const WarningScreen: React.FC<Props> = ({navigation, routes}) => {
-	const { getWarnings } = ServicesLogin;
+	const { getWarnings } = ServicesWarning;
 	const { property } = useStateUser();
 
 	const [loading, setLoading] = useState(true);

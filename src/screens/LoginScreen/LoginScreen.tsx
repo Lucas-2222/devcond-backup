@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from 'react'
+import React,{ useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Container, Field, Logo, ButtonText, ButtonArea } from "./LoginScreen.style";
 import { useStateUser} from '../../contexts/StateContext';
@@ -7,9 +7,7 @@ import { Login } from './LoginScreen.types';
 
 
 const LoginScreen = ({navigation}:NativeStackScreenProps<any>) => {
-	const { validateLogin, login } = ServicesLogin;
-
-	//const navigation = useNavigation();
+	const { login } = ServicesLogin;
 
 	const { user, handleUser } = useStateUser();
 	

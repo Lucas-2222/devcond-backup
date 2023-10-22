@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PropLikes, PropWalls } from '../contexts/StateContext';
 
-const baseUrl = 'http://192.168.0.103:3003';
+export const baseUrl = 'http://192.168.0.103:3003';
 
 export const request = async <T>(method: string, endpoint: string, params?: Record<string, any>) => {
   let token = await AsyncStorage.getItem('token');
@@ -36,8 +36,8 @@ export const request = async <T>(method: string, endpoint: string, params?: Reco
   try {
     let req = await fetch(fullUrl,{headers, method, body})
     let res: T = await req.json();
-   
-    return res;    
+
+    return {...res, status:req.status};    
   } catch (error) {
     throw new Error(error as string);
   }

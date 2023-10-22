@@ -1,10 +1,8 @@
 import React,{ useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./DocumentScreen.style";
-import { Docs, PropWalls, Walls, useStateUser } from '../../contexts/StateContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Docs } from '../../contexts/StateContext';
 import { ServicesLogin } from './DocumentScreen.services';
-import api from '../../services/api';
 import DocItem from '../../components/DocItem';
 
 type Props = NativeStackScreenProps<any>
