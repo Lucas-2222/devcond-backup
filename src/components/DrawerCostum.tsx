@@ -10,7 +10,7 @@ import api from "../services/api";
 
 import uriToJson from "../utils/uriToJson";
 
-const DrawerArea = styled.View`
+const DrawerArea = styled.SafeAreaView`
     flex: 1;
     background-color: #fff;
 `;
