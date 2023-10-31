@@ -2,13 +2,14 @@ import React,{ useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./DocumentScreen.style";
 import { Docs } from '../../contexts/StateContext';
-import { ServicesLogin } from './DocumentScreen.services';
-import DocItem from '../../components/DocItem';
+import { ServicesDoc } from './DocumentScreen.services';
+import renderDocItem from '../../components/DocItem';
+import { Alert, FlatList } from 'react-native';
 
 type Props = NativeStackScreenProps<any>
 
-const DocumentScreen: React.FC<Props> = ({navigation, routes}) => {
-	const { getDocs } = ServicesLogin;
+const DocumentScreen: React.FC<Props> = ({navigation, route}) => {
+	const { getDocs } = ServicesDoc;
 
 	const [loading, setLoading] = useState(true);
 	const [docList, setDocList] = useState<Docs[]>([] as Docs[]);
@@ -22,12 +23,17 @@ const DocumentScreen: React.FC<Props> = ({navigation, routes}) => {
 
 	const getDoc = async () => {
 		setLoading(true);
-		const result = await getDocs();
-		setLoading(false);
-		if(result.error === '') {
-			setDocList(result.data)
-		} else {
-			console.log(result.error);
+		try {
+			const result = await getDocs();
+			if(result.error === '') {
+				setDocList(result.data)
+			} else {
+				Alert.alert('Error', result.error);
+			}
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			Alert.alert('Error', error as string);
 		}
 	}
 
@@ -38,12 +44,12 @@ const DocumentScreen: React.FC<Props> = ({navigation, routes}) => {
 						<C.NoListText>Não há documentos.</C.NoListText>
 					</C.NoListArea>
 				}
-				<C.List 
+				<FlatList 
 					data={docList}
 					onRefresh={getDoc}
 					refreshing={loading}
-					renderItem={({item}) => (<DocItem {...item} />)}
-					keyExtractor={({item})=> item?.id.toString() }
+					renderItem={renderDocItem}
+					keyExtractor={(item, index)=> item?.id.toString()+index}
 				/>
     </C.Container>		
   )

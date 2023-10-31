@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components/native";
 import { useStateUser } from "../contexts/StateContext";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -10,7 +10,7 @@ import api from "../services/api";
 
 import uriToJson from "../utils/uriToJson";
 
-const DrawerArea = styled.View`
+const DrawerArea = styled.SafeAreaView`
     flex: 1;
     background-color: #fff;
 `;
@@ -77,13 +77,14 @@ const MenuSquare = styled.View`
 const MenuButtonText = styled.Text`
     font-size: 15px;
     margin-left: 10px;
-    color: #666E78;
+    color:${props=>props.active ? "#FF0000" : "#666E78"}
 `;
 
 type Props = NativeStackScreenProps<any>
 
 export default ({navigation, ...props}: Props) => {
 
+    const [active, setActive] = useState<number>(0);
     const menus = [
         {title: 'Mural de Avisos', icon: 'inbox',  action:'type=navigation&screen=WallScreen'},
         {title: 'Documentos', icon: 'file-text',  action:'type=navigation&screen=DocumentScreen'},
@@ -113,9 +114,9 @@ export default ({navigation, ...props}: Props) => {
         });
     };
 
-    const onPressAction = (acao: string) => {
+    const onPressAction = (acao: string, index: number) => {
         const { type, screen, action} = uriToJson(acao);
-
+        setActive(index);
         switch(type){
             case 'navigation':
                 navigation.navigate(screen)
@@ -134,10 +135,10 @@ export default ({navigation, ...props}: Props) => {
             </DrawerLogoArea>
             <DrawerScroller>
                 {menus.map((item, index)=>(
-                    <MenuButton key={index} onPress={()=>onPressAction(item.action)}>
+                    <MenuButton key={index} onPress={()=>onPressAction(item.action, index)}>
                         <MenuSquare></MenuSquare>
-                        <Icon name={item.icon} size={20} color={'#666E78'}/>
-                        <MenuButtonText>{item.title}</MenuButtonText>
+                        <Icon name={item.icon} size={20} color={'#666E78'} />
+                        <MenuButtonText active={index === active}>{item.title}</MenuButtonText>
                     </MenuButton>
                 ))}
             </DrawerScroller>

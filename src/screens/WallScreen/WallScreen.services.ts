@@ -2,7 +2,7 @@ import { request } from "../../services/api";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PropWalls } from "../../contexts/StateContext";
 
-const ServicesLogin = {
+const ServicesWall = {
   logout: async () => {
     try {
       let token = await AsyncStorage.getItem('token');
@@ -15,11 +15,11 @@ const ServicesLogin = {
     }
     
   },
-  getWall: async (): Promise<PropWalls> => {
-    let token = await AsyncStorage.getItem('token');
+  getWall: async (): Promise<PropWalls> => {    
     let json: PropWalls = await request('get', '/walls', {});
     return json;
+    
   }
 }
 
-export { ServicesLogin };
+export { ServicesWall };
