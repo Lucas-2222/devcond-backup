@@ -63,7 +63,6 @@ const WallItem: React.FC<Walls> = ({title, dateCreated, body, id, likes, liked})
     setOnLiked(!onLiked);
     const result = await api.likeWallPost(id);
     if(result.error == '') {
-      // Como nao temos back-end ainda vamos gerar um numero aleatorio
       setLikeCount(Math.floor(Math.random() * 100) + 1);
       //setLikeCount( result.likes);
       //setOnLiked( result.liked );
@@ -79,7 +78,7 @@ const WallItem: React.FC<Walls> = ({title, dateCreated, body, id, likes, liked})
           <InfoArea>
 
             <Title>{title}</Title>
-            <Date>{dateCreated}</Date>
+            <Date>{dateCreated?.toString()}</Date>
           </InfoArea>
       </HeaderArea>
       <Body>

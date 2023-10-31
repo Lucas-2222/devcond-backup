@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Docs } from '../contexts/StateContext';
@@ -23,20 +23,22 @@ const Title = styled.Text`
   margin-left: 10px;
 `;
 
-const DocItem: React.FC<Docs> = ({id, title, fileurl}) => {
-
+const renderDocItem = useCallback(({item}: {item: Docs}): JSX.Element =>{
+  
   const handleClick = async () => {
-    const supported = await Linking.canOpenURL( fileurl );
+    const supported = await Linking.canOpenURL( item.fileurl );
     if(supported) {
-      await Linking.openURL(fileurl);
+      await Linking.openURL(item.fileurl);
     }
   } 
 
   return(
     <Box onPress={handleClick}>
-          <Icon name="file-text" size={30} color="#8B63E7"/>
-          <Title>{title}</Title>
+      <Icon name="file-text" size={30} color="#8B63E7"/>
+      <Title>{item.title}</Title>
     </Box>
-  );
-};
-export default DocItem;
+  )
+}, [])
+
+
+export default renderDocItem;

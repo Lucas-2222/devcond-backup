@@ -7,7 +7,6 @@ import { ServicesPreaload } from './PreloadScreen.services';
 
 import api from '../../services/api';
 
-import { ApiResponse } from './preloadScreen.types';
 
 const PreloadScreen = ({navigation}: NativeStackScreenProps<any>) => {
 	const { validateToken } = ServicesPreaload;
@@ -17,9 +16,9 @@ const PreloadScreen = ({navigation}: NativeStackScreenProps<any>) => {
 		const checkLogin = async () => {
 			let token = await api.getToken();
 			if(token) {
-				let result: ApiResponse = await validateToken();
+				let result = await validateToken();
 				if(result.error === '') {
-					handleUser(result.login);
+					handleUser({...result});
 					navigation.reset({
 						index: 1,
 						routes:[{name: 'ChoosePropertyScreen'}]

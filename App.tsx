@@ -3,6 +3,7 @@ import Routes from "./src/routes";
 import { StateProvider } from "./src/contexts/StateContext";
 import React from 'react';
 import { LogBox } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 LogBox.ignoreAllLogs();
 
@@ -11,9 +12,11 @@ const App = () => {
 
   return(
     <GestureHandlerRootView style={{flex:1}}>
-      <StateProvider>
-        <Routes />
-      </StateProvider>
+      <SafeAreaView style={{flex: 1}}>
+        <StateProvider>
+          <Routes />
+        </StateProvider>
+      </SafeAreaView>
     </GestureHandlerRootView>    
   );
 }

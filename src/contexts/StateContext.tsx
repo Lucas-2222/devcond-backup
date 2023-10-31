@@ -1,33 +1,13 @@
 import React, { createContext, useState, useContext, useCallback }  from "react";
 import { StateProviderProps } from "./StateContext.type";
-import { Login } from "../screens/LoginScreen";
+import { User } from "./StateContext.type";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Properties } from "../screens/ChoosePropertyScreen/ChoosePropertyScreen.types";
 
-type User = {
-  id: number;
-  nome: string;
-}
-
-type Property = {
+export type Property = {
 	id: number;
   name: string;
-}
-
-interface PropsState {
-  user: Login;
-  property: Property;
-  handleProperty(property: Property): void;
-  handleUser(user: Login): void;
-  walls: PropWalls;
-  handleWalls(walls: Walls): void;
-  docs: PropDocs;
-  handleDocs(docs: Docs): void;
-  warns: PropWarns;
-  handleWarns(warns: Warns): void;
-  files: PropFile;
-  handleFiles(files: File): void;
-  addWarn: PropAddWarn;
-  handleAddWarn(addWarn: AddWarn): void;
 }
 
 export type PropWalls = {
@@ -36,9 +16,9 @@ export type PropWalls = {
 }
 
 export type Walls = {
-  id: number;
+  id: string;
   title: string;
-  dateCreated: string;
+  dateCreated: Date;
   body: string;
   likes: number;
   liked: boolean;
@@ -66,34 +46,28 @@ export type Docs= {
 }
 
 export type PropWarns = {
-  data: Warns[];
+  warning: Warns[];
   error: string;
-}
+} 
 
-type Photos = {
-  url: string;
+export type Photos = {
+  name: string;
+  uri?: string;
+  fileName?: string;
+  type?: string;
 }
 
 export type Warns = {
-  id: number;
+  id: string;
   title: string;
   status: string;
-  dateCreated: string;
+  dateCreated: Date;
   photos: Photos[];
-}
-
-export type PropFile = {
-  file: File[];
-  error:  string;
-}
-
-export type File = {
-  photo: string;
 }
 
 export type AddWarn = {
   title: string;
-  list: string;
+  list: Photos[];
 }
 
 export type PropAddWarn = {
@@ -101,24 +75,55 @@ export type PropAddWarn = {
   error: string;
 }
 
+export type Reservations = {
+  title: string;
+  cover: string;
+  dates: string;
+  index: number;
+  navigation: NativeStackScreenProps<any>;
+}
+
+export type PropReservations = {
+  data: Reservations[];
+  error: string;
+}
+
+
+
+interface PropsState {
+  user: User;
+  property: Properties;
+  walls: PropWalls;
+  docs: PropDocs;
+  warns: PropWarns;
+  addWarn: PropAddWarn;
+  reservations: PropReservations;
+  handleAddWarn(addWarn: AddWarn): void;
+  handleWarns(warns: Warns): void;
+  handleDocs(docs: Docs): void;
+  handleWalls(walls: Walls): void;
+  handleProperty(property: Properties): void;
+  handleUser(user: User): void;
+  handleReservations(reservations: Reservations): void;
+}
+
 const StateContext = createContext<PropsState>({} as PropsState );
 
 const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<Login>({} as Login);
-  const [property, setProperty] = useState<Property>({} as Property);
+  const [user, setUser] = useState<User>({} as User);
+  const [property, setProperty] = useState<Properties>({} as Properties);
   const [walls, setWalls] = useState<PropWalls>({} as PropWalls);
   const [docs, setDocs] = useState<PropDocs>({} as PropDocs);
   const [warns, setWarns] = useState<PropWarns>({} as PropWarns);
-  const [files, setFiles] = useState<PropFile>({} as PropFile)
-  const [addWarn, setAddWarn] = useState<PropAddWarn>({} as PropAddWarn)
+  const [addWarn, setAddWarn] = useState<PropAddWarn>({} as PropAddWarn);
+  const [reservations, setReservations] = useState<PropReservations>({} as PropReservations);
 
-  const handleUser = useCallback((user: Login)=> {
-    AsyncStorage.setItem('token', user.token)
+  const handleUser = useCallback((user: User)=> {
 		setUser(user);
 
   },[]);
 
-  const handleProperty =  useCallback( async (property: Property)=>{
+  const handleProperty =  useCallback( async (property: Properties)=>{
     await AsyncStorage.setItem('property', JSON.stringify(property))
     setProperty(property);
   },[]);
@@ -147,13 +152,6 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
     }));
   }, []);
 
-  const handleFiles = useCallback( async (files: File)=> {
-    await AsyncStorage.setItem('files', JSON.stringify(files))
-    setFiles(prevState=>({
-      ...prevState,
-      files
-    }));
-  }, []);
 
   const handleAddWarn = useCallback( async (addWarn: AddWarn)=>{
     await AsyncStorage.setItem('addWarn', JSON.stringify(addWarn))
@@ -163,23 +161,31 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
     }))
   }, []);
 
+  const handleReservations = useCallback( async (reservations: Reservations)=>{
+    await AsyncStorage.setItem('reservations', JSON.stringify(reservations))
+    setReservations(prevState=>({
+      ...prevState,
+      reservations
+    }))
+  }, []);
+
   return(
     <StateContext.Provider
       value={{
         user,
-        handleUser,
         property,
-        handleProperty,
         walls,
-        handleWalls,
         docs,
-        handleDocs,
         warns,
-        handleWarns,
-        files,
-        handleFiles,
         addWarn,
-        handleAddWarn
+        reservations,
+        handleAddWarn,
+        handleWarns,
+        handleDocs,
+        handleWalls,
+        handleProperty,
+        handleUser,
+        handleReservations
       }} 
     >
       {children}

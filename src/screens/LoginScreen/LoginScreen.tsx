@@ -3,22 +3,21 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Container, Field, Logo, ButtonText, ButtonArea } from "./LoginScreen.style";
 import { useStateUser} from '../../contexts/StateContext';
 import { ServicesLogin } from './LoginScreen.services';
-import { Login } from './LoginScreen.types';
-
 
 const LoginScreen = ({navigation}:NativeStackScreenProps<any>) => {
+	
 	const { login } = ServicesLogin;
 
 	const { user, handleUser } = useStateUser();
 	
-	const [cpf, setCpf] = useState('');
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	const handleLoginButton = async () => {
-		if(cpf && password) {
-			let result: Login = await login({cpf, password});
+		if(email && password) {
+			let result = await login({email, password});
 			if(result.error == '') {
-				handleUser(result);
+				handleUser({...result});
 				navigation.reset({
 					index:1,
 					routes:[{ name: 'ChoosePropertyScreen' }]
@@ -44,10 +43,9 @@ const LoginScreen = ({navigation}:NativeStackScreenProps<any>) => {
 				resizeMode='contain'
 			/>
 			<Field 
-				placeholder='Digite seu CPF'
-				keyboardType='numeric'
-				value={cpf}
-				onChangeText={(value: string)=>setCpf(value)}
+				placeholder='Digite seu email'
+				value={email}
+				onChangeText={(value: string)=>setEmail(value)}
 			/>
 			<Field 
 				placeholder='Digite sua senha'

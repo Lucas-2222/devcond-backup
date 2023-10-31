@@ -2,21 +2,22 @@ import React,{ useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./WallScreen.style";
 import { Walls, useStateUser } from '../../contexts/StateContext';
-import { ServicesLogin } from './WallScreen.services';
+import { ServicesWall } from './WallScreen.services';
 import WallItem from '../../components/WallItem';
+import { FlatList } from 'react-native-gesture-handler';
 
 type Props = NativeStackScreenProps<any>
 
-const WallScreen: React.FC<Props> = ({navigation, routes}) => {
-	const { getWall } = ServicesLogin;
+const WallScreen: React.FC<Props> = ({navigation}) => {
+	const { getWall } = ServicesWall;
 
 	const [loading, setLoading] = useState(true);
 	const [wallList, setWallList] = useState<Walls[]>([] as Walls[]);
 
 	useEffect(()=>{
-		navigation.setOptions({
-			headerTitle: 'Mural de Avisos'
-		});
+		// navigation.setOptions({
+		// 	headerTitle: 'Mural de Avisos'
+		// });
 		getWalls();
 	}, [])
 
@@ -38,12 +39,12 @@ const WallScreen: React.FC<Props> = ({navigation, routes}) => {
 						<C.NoListText>Não há avisos.</C.NoListText>
 					</C.NoListArea>
 				}
-				<C.List 
+				<FlatList 
 					data={wallList}
 					onRefresh={getWall}
 					refreshing={loading}
 					renderItem={({item}) => (<WallItem {...item} />)}
-					keyExtractor={({item})=> item?.id.toString() }
+					keyExtractor={(item: any, index)=> item?.id.toString()+index}
 				/>
     </C.Container>		
   )

@@ -4,10 +4,11 @@ import C from "./BilletScreen.style";
 import { Docs, useStateUser } from '../../contexts/StateContext';
 import { ServicesLogin } from './BilletScreen.services';
 import BilletItem from '../../components/BilletItem';
+import { FlatList } from 'react-native-gesture-handler';
 
 type Props = NativeStackScreenProps<any>
 
-const BilletScreen: React.FC<Props> = ({navigation, routes}) => {
+const BilletScreen: React.FC<Props> = ({navigation, route}) => {
 	const { getBillets } = ServicesLogin;
 	const { property } = useStateUser();
 
@@ -39,12 +40,12 @@ const BilletScreen: React.FC<Props> = ({navigation, routes}) => {
 						<C.NoListText>Não há boletos.</C.NoListText>
 					</C.NoListArea>
 				}
-				<C.List 
+				<FlatList 
 					data={billetList}
 					onRefresh={getBillet}
 					refreshing={loading}
 					renderItem={({item}) => (<BilletItem {...item} />)}
-					keyExtractor={({item})=> item?.id.toString() }
+					keyExtractor={(item, index)=> item?.id.toString()+index}
 				/>
     </C.Container>		
   )

@@ -1,14 +1,9 @@
 import { request } from "../../services/api";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {  PropWarns } from "../../contexts/StateContext";
-import { useStateUser } from "../../contexts/StateContext";
-
-
 
 const ServicesWarning = {
-
-  getWarnings: async (id: number): Promise<PropWarns> => {
-    let json: PropWarns = await request('get', '/warnings', {id});
+  getWarnings: async (): Promise<PropWarns> => {
+    let json = await request<PropWarns>('get', '/warningsphotos', {});
     return json;
   }
 }

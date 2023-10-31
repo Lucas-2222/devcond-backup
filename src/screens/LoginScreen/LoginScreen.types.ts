@@ -1,28 +1,13 @@
-export type Response = {
-  token: string;
-}
+import { User } from "../../contexts/StateContext.type";
 
 export type Props = {
-  cpf: string;
+  email: string;
   password: string;
 }
 
-type Properties = {
-  id: number;
+export type Response = {
+  error?: string;
+  token: string;
   name: string;
-}
-
-export type User = {
-    id: number;
-    name: string;
-    email: string;
-    cpf: string;
-    password: string;
-    properties: Properties[]
-  }
-
-
-export interface Login extends User {
-    token: string;
-    error?: string;
+  hash: string;
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import { Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {  Warns } from '../contexts/StateContext';
+import { baseUrl } from '../services/api';
 
 const Box = styled.View`
   background-color: #FFF;
@@ -83,7 +84,7 @@ const WarnItem: React.FC<Warns> = ({ title, dateCreated, status, photos}) => {
 
   return(
     <Box>
-      <Date>{dateCreated}</Date>
+      <Date>{dateCreated?.toString()}</Date>
       <Title>{title}</Title>
       <StatusArea>
         <Icon name="inbox" size={24} color="#8B63E7"/>
@@ -92,15 +93,15 @@ const WarnItem: React.FC<Warns> = ({ title, dateCreated, status, photos}) => {
           {status === Enum.RESOLVED && 'Resolvido'}
         </StatusText>
       </StatusArea>
-      {photos.length > 0 &&
-          <PhotosArea>
-            {photos.map((item, index)=>(
-              <PhotoItem key={index} onPress={()=>openModal(item.url)}>
-                <PhotoImage source={{uri: item.url}} resizeMode="cover"/>
-              </PhotoItem> 
-            ))}
-          </PhotosArea>
-        } 
+      {photos?.length > 0 &&
+        <PhotosArea>
+          {photos?.map((item, index)=>(
+            <PhotoItem key={index} onPress={()=>openModal(`${baseUrl}/images/${item.name}`)}>
+              <PhotoImage source={{uri: `${baseUrl}/images/${item.name}`}} resizeMode="cover"/>
+            </PhotoItem> 
+          ))}
+        </PhotosArea>
+      } 
         <Modal
           animationType="slide"
           transparent={true}
