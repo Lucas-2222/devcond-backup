@@ -3,15 +3,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import C from "./WarningAddScreen.style";
 import { launchCamera } from 'react-native-image-picker';
 import Icon  from 'react-native-vector-icons/FontAwesome';
-import { ServicesAddWarning } from './WarningAddScreen.services';
+import ServicesAddWarning from './WarningAddScreen.services';
 import { Photos } from '../../contexts/StateContext';
 
 type Props = NativeStackScreenProps<any, any>;
 
 const WarningAddScreen: React.FC<Props> = ({navigation, route}) => {
-	
-
-	const callback = route?.params?.callback;
+	const { addWarning } = ServicesAddWarning;
+	const callback = route.params?.callback;
 
 	const [ warnText, setWarnText] = useState('');
 	const [photoList, setPhotoList] = useState<Photos[]>([] as Photos[]);
@@ -25,7 +24,6 @@ const WarningAddScreen: React.FC<Props> = ({navigation, route}) => {
 
 	const handlePhotoAdd = async () => {
 		launchCamera({ mediaType: 'photo', maxWidth: 1280 }, async (response) => {
-			console.log(response);
 			if (!response.didCancel) {
 				setPhotoList((prevPhoto) => [
 					...prevPhoto,
@@ -48,25 +46,17 @@ const WarningAddScreen: React.FC<Props> = ({navigation, route}) => {
 
 	const handleSaveWarn = async () => {
 		if(warnText !== '') {
-		// 	const result = await addWarning(warnText, photoList);
-		// 	if(result.error === '') {
-		// 		navigation.navigate('WarningScreen');
-		// 	} else {
-		// 		console.log(result.error);
-		// 	} 
-		// } else {
-		// 	console.log('Descreva a ocorrência');
-		callback((prevPhoto: any) => [
-			...prevPhoto,
-			{
-				id: 2,
-				title: warnText,
-				status: 'IN_REVIEW',
-				dateCreated: '21/05/21',
-				photos: photoList
-			}
-		])};
+			const result = await addWarning(photoList, warnText);
+			if(result.error === '') {
+				console.log(result)
+			} else {
+				console.log(result.error);
+			} 
+		} else {
+			console.log('Descreva a ocorrência');
+		}
 		navigation.navigate('WarningScreen');
+		callback();
 		setWarnText('');
 		setPhotoList([]);
 	}	

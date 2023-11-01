@@ -11,7 +11,7 @@
 
   const ReservationScreen: React.FC<Props> = ({navigation, route}) => {
 
-    const { getReservations } = ServicesReservation;
+    const { getReservationsType } = ServicesReservation;
 
     const [loading, setLoading] = useState(true);
     const [list, setList] = useState<Reservations[]>([]);
@@ -26,7 +26,7 @@
     const getReservation = async () => {
       setLoading(true)
       try {
-        const result = await getReservations();
+        const result = await getReservationsType();
         if(result.error === '') {
            setList(result.data);
         } else {

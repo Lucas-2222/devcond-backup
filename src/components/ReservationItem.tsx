@@ -45,7 +45,7 @@ const renderReservationItem = ({item}: {item: Reservations}): JSX.Element =>{
     navigation.navigate('ReservationAddScreen', {title, cover});
   }
   return(
-    <Box key={item?.index} onPress={()=>handleClick(item.title, item.cover)}>
+    <Box onPress={()=>handleClick(item.title, item.cover)}>
       <CoverImage source={{uri: item?.cover}} resizeMode="cover"/>
       <Title>{item?.title}</Title>
       <DateText>Horários de Funcionamento:</DateText>

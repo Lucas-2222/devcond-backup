@@ -71,7 +71,8 @@ export type AddWarn = {
 }
 
 export type PropAddWarn = {
-  data: AddWarn[];
+  info: string;
+  idWarning:string;
   error: string;
 }
 
@@ -79,8 +80,6 @@ export type Reservations = {
   title: string;
   cover: string;
   dates: string;
-  index: number;
-  navigation: NativeStackScreenProps<any>;
 }
 
 export type PropReservations = {

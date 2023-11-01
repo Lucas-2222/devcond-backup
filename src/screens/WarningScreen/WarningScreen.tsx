@@ -20,7 +20,7 @@ const WarningScreen: React.FC<Props> = ({navigation, route}) => {
 		navigation.setOptions({
 			headerTitle: 'Livro de Ocorrências',
 			headerRight: () => (
-				<C.AddButton onPress={()=>navigation.navigate('WarningAddScreen', {callback: setList})}>
+				<C.AddButton onPress={()=>navigation.navigate('WarningAddScreen', {callback: getWarning})}>
 					<Icon name="plus" size={24} color="#000"/>
 				</C.AddButton>	
 			)

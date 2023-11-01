@@ -1,15 +1,10 @@
-import { request } from "../../services/api";
-import { PropAddWarn, Photos } from "../../contexts/StateContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { requestFile } from "../../services/api";
+import { PropAddWarn } from "../../contexts/StateContext";
 
 const ServicesAddWarning = {
-  // addWarning: async (title: string, list: Photos[]): Promise<PropAddWarn> => {
-  //   let json = await request<PropAddWarn>('post', '/warning', {
-  //     title,
-  //     list
-  //   });
-  //   return json;
-  // }
+  addWarning: async (formData: any[], title: string): Promise<PropAddWarn> => {
+    let json = await requestFile<PropAddWarn>('/warnings', formData, title);
+    return json;
+  }
 }
-
-export { ServicesAddWarning };
+export default ServicesAddWarning;
