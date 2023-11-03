@@ -41,11 +41,11 @@ const DataItem = styled.Text`
 const renderReservationItem = ({item}: {item: Reservations}): JSX.Element =>{
   const navigation: any = useNavigation();
 
-  const handleClick = (title: string, cover: string) => {
-    navigation.navigate('ReservationAddScreen', {title, cover});
+  const handleClick = (title: string, cover: string, id: string) => {
+    navigation.navigate('ReservationAddScreen', {title, cover, id});
   }
   return(
-    <Box onPress={()=>handleClick(item.title, item.cover)}>
+    <Box onPress={()=>handleClick(item.title, item.cover, item.id)}>
       <CoverImage source={{uri: item?.cover}} resizeMode="cover"/>
       <Title>{item?.title}</Title>
       <DateText>Horários de Funcionamento:</DateText>

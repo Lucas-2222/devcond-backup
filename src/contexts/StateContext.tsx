@@ -77,6 +77,7 @@ export type PropAddWarn = {
 }
 
 export type Reservations = {
+  id: string;
   title: string;
   cover: string;
   dates: string;

@@ -5,21 +5,39 @@
   import { Reservations } from "../../contexts/StateContext";
   import { useNavigation, useRoute } from "@react-navigation/native";
   import CalendarPicker from 'react-native-calendar-picker';
+  import { ServicesAddReservation } from "./ReservationAddScreen.services";
+import { Data } from "./ReservationAddScreen.types";
 
   type Props = NativeStackScreenProps<any>
 
   const ReservationAddScreen: React.FC<Props> = ({route, navigation}) => {
     
+    const { getDisabledDates } = ServicesAddReservation;
+    const id = route?.params?.id;
+
+    const [disabled, setDisabled] = useState<Date[]>([] as Date[]);
     const [loading, setLoading] = useState(false);
 
+    const getDisabled = async () => {
+      try {
+        const result = await getDisabledDates(id);
+        if(result.error == '') {
+          let dateList = [];
+          for(let i in result.data) {
+            dateList.push( new Date(result.data[i]))
+          }
+          setDisabled(dateList)
+        }
+      } catch (error) {
+        Alert.alert('Erro', 'Algo deu errado.')
+      }
+    }
+
     useEffect(()=>{
-      // console.log(route)
-      // const unsubscribe = navigation.addListener('focus', () => {
         navigation.setOptions({
           headerTitle: `Reservar ${route?.params?.title}`
         });
-      // });
-      // return unsubscribe;
+        getDisabled();
     },[navigation, route]);
 
     const minDate = new Date();
@@ -45,7 +63,8 @@
                 onDateChange={handleDateChange}
                 minDate={minDate}
                 maxDate={maxDate}
-                weekdays={['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']}
+                disabledDates={disabled}
+                weekdays={['Dom', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Seg']}
                 months={["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]}
                 previousTitle="Anterior"
                 nextTitle="Próximo"
