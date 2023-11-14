@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PropLikes } from '../contexts/StateContext';
 
-export const baseUrl = 'http://192.168.0.103:3007';
+export const baseUrl = 'http://192.168.0.103:3000';
 
 interface ApiResponse<T = any>{
   response: T;
