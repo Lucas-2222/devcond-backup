@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PropLikes } from '../contexts/StateContext';
 
-export const baseUrl = 'http://192.168.0.103:3000';
+export const baseUrl = 'http://192.168.0.104:3007';
 
 interface ApiResponse<T = any>{
   response: T;
@@ -123,5 +123,6 @@ export default {
   likeWallPost: async (id: number): Promise<PropLikes> => {
     let json = await request<PropLikes>('post', `/wall/${id}/like`, {});
     return json;
-  }
+  },
+  
 };

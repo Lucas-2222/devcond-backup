@@ -7,13 +7,12 @@ const ServicesAddReservation = {
     let json = await request<DisabledProps>('get', `/reservations/dates/${id}`, {});
     return json;
   },
-  getReservationsTime: async (id: string): Promise<Times> => {
-    let json = await request<Times>('get', `/reservationstimes/${id}/2023-11-22`, {})
-    console.log(json);
+  getReservationsTime: async (id: string, dates: string): Promise<Times> => {
+    let json = await request<Times>('get', `/reservationstimes/${id}/${dates}`, {})
     return json;
   },
-  setReservations: async (idReservationsType: string, time: string, date: string): Promise<Saved> => {
-    let json = await request<Saved>('post', '/reservationssaved', {date, idReservationsType, time});
+  setReservations: async (idReservationType: string, time: string, date: string, title: string, cover: string, dates: string): Promise<Saved> => {
+    let json = await request<Saved>('post', '/reservationsmyscreen', {date, idReservationType, time, cover, title, dates});
     return json;
   }
  }

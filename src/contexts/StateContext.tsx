@@ -88,6 +88,22 @@ export type PropReservations = {
   error: string;
 }
 
+export type List = {
+  id: string;
+  idReservationType?: string;
+  date: string;
+  dates?: string;
+  time: string;
+  index?: number;
+  cover: string;
+  title: string;
+}
+
+export type PropList = {
+  error: string;
+  data: List[];
+}
+
 
 
 interface PropsState {
@@ -98,6 +114,7 @@ interface PropsState {
   warns: PropWarns;
   addWarn: PropAddWarn;
   reservations: PropReservations;
+  list: List[];
   handleAddWarn(addWarn: AddWarn): void;
   handleWarns(warns: Warns): void;
   handleDocs(docs: Docs): void;
@@ -105,6 +122,8 @@ interface PropsState {
   handleProperty(property: Properties): void;
   handleUser(user: User): void;
   handleReservations(reservations: Reservations): void;
+  handleList(list: List[]): void;
+  removeIndex(id: string): void;
 }
 
 const StateContext = createContext<PropsState>({} as PropsState );
@@ -117,6 +136,7 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
   const [warns, setWarns] = useState<PropWarns>({} as PropWarns);
   const [addWarn, setAddWarn] = useState<PropAddWarn>({} as PropAddWarn);
   const [reservations, setReservations] = useState<PropReservations>({} as PropReservations);
+  const [list, setList] = useState<List[]>([] as List[]);
 
   const handleUser = useCallback((user: User)=> {
 		setUser(user);
@@ -169,6 +189,17 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
     }))
   }, []);
 
+  const handleList = useCallback( async (list: List[])=>{
+    setList(list)
+  },[]);
+
+  const removeIndex = (id: string) => {
+    setList(prevState=> {
+      const newPrevState = prevState?.filter((item)=>(item.id !== id ))
+      return newPrevState;
+    })
+  };
+  
   return(
     <StateContext.Provider
       value={{
@@ -179,13 +210,16 @@ const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
         warns,
         addWarn,
         reservations,
+        list,
         handleAddWarn,
         handleWarns,
         handleDocs,
         handleWalls,
         handleProperty,
         handleUser,
-        handleReservations
+        handleReservations,
+        handleList,
+        removeIndex
       }} 
     >
       {children}

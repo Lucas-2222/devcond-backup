@@ -6,10 +6,12 @@
   import ReservationItem from "../../components/ReservationItem";
   import { Reservations } from "../../contexts/StateContext";
   import { FlatList } from "react-native-gesture-handler";
+  import { useNavigation } from "@react-navigation/native";
 
   type Props = NativeStackScreenProps<any>
 
-  const ReservationScreen: React.FC<Props> = ({navigation, route}) => {
+  const ReservationScreen: React.FC<Props> = ({route}) => {
+    const navigation: any = useNavigation();
 
     const { getReservationsType } = ServicesReservation;
 
@@ -37,13 +39,13 @@
         setLoading(false);
         Alert.alert('Error', error as string);
       
+      }
     }
-  }
 
     return(
       <C.Container>
         <C.Scroller contentContainerStyle={{paddingBottom: 40}}>
-          <C.ButtonArea>
+          <C.ButtonArea onPress={()=>navigation.navigate('ReservationMyScreen',{title: "Reservas"})}>
             <C.ButtonText>Minhas Reservas</C.ButtonText>
           </C.ButtonArea>
 

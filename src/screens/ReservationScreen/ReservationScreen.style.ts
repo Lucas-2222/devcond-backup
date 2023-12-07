@@ -10,7 +10,7 @@ export default {
   `,
   LoadingIcon: styled.ActivityIndicator``,
   ButtonArea: styled.TouchableOpacity`
-    background-color: #8863E6;
+    background-color: ${({theme})=> theme.colors.botton_color};
     padding: 12px;
     border-radius: 10px;
     justify-content: center;

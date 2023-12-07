@@ -31,7 +31,7 @@ export type Saved = {
 }
 
 export type ReservSaved = {
-  idReservationsType: string;
+  idReservationType: string;
   date: string;
   times: string;
 }

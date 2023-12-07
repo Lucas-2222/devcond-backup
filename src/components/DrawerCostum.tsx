@@ -90,7 +90,7 @@ export default ({navigation, ...props}: Props) => {
         {title: 'Documentos', icon: 'file-text',  action:'type=navigation&screen=DocumentScreen'},
         {title: 'Reservas', icon: 'calendar', action:'type=navigation&screen=ReservationScreen'},
         {title: 'Livro de Ocorrências', icon: 'bug',  action:'type=navigation&screen=WarningScreen'},
-        {title: 'Achados e Perdidos', icon: 'search',  action:'type=navigation&screen=FoundAndLostScreen'},
+        {title: 'Achados e Perdidos', icon: 'search',  action:'type=navigation&screen=FNLScreen'},
         {title: 'Boletos', icon:'wpforms', action:'type=navigation&screen=BilletScreen'},
         {title: 'Perfil', icon: 'user',  action:'type=navigation&screen=ProfileScreen'},
         {title: 'Sair', icon: 'toggle-left', action:'type=onPress&action=sair'}

@@ -6,13 +6,19 @@ import CalendarPicker from 'react-native-calendar-picker';
 import { ServicesAddReservation } from "./ReservationAddScreen.services";
 import { Data, NewTime } from "./ReservationAddScreen.types";
 import { Moment } from "moment";
+import { useStateUser } from "../../contexts/StateContext";
+import { useNavigation } from "@react-navigation/native";
 
   
 type Props = NativeStackScreenProps<any>
 
-const ReservationAddScreen: React.FC<Props> = ({route, navigation}) => {
+const ReservationAddScreen: React.FC<Props> = ({route}) => {
   const ref = useRef(null)
   const id = route?.params?.id;
+
+  const navigation: any = useNavigation();
+
+  const { handleList } = useStateUser();
 
   const { getDisabledDates, getReservationsTime, setReservations } = ServicesAddReservation;
 
@@ -20,7 +26,7 @@ const ReservationAddScreen: React.FC<Props> = ({route, navigation}) => {
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [timeList, setTimeList] = useState<NewTime[]>([] as NewTime[]);
-  const [selectedTime, setSelectedTime] = useState<string>(''); 
+  const [selectedTime, setSelectedTime] = useState<string>('');
 
   const formatDate = (Datas: Data[]): Promise<Date[]> => {
     return new Promise((resolve, reject)=>{
@@ -33,13 +39,24 @@ const ReservationAddScreen: React.FC<Props> = ({route, navigation}) => {
   }
   const handleSave = async () => {
     try {
+      const {title, cover, id, dates, date, times}:any = route?.params;
       const result = await setReservations(
         id,
-        selectedDate,
-        selectedTime
+        selectedTime,
+        selectedDate.split('/').reverse().join('-'),
+        title,
+        cover,
+        dates
       );
-      console.log(result);
       if(result.error == '') {
+        // handleList({
+        //   title,
+        //   cover,
+        //   id,
+        //   dates,
+        //   date: selectedDate.split('/').reverse().join('-'),
+        //   times: selectedTime
+        // })
         navigation.navigate('ReservationMyScreen')
       } else {
         Alert.alert(result.error)
@@ -48,6 +65,7 @@ const ReservationAddScreen: React.FC<Props> = ({route, navigation}) => {
       Alert.alert('Erro', 'Algo deu errado.')
     }
   }
+
   const getDisabled = async () => {
     setDisabled([]);    
     setLoading(true);
@@ -56,7 +74,6 @@ const ReservationAddScreen: React.FC<Props> = ({route, navigation}) => {
     setSelectedTime('');
     try {
       const result = await getDisabledDates(id);
-      console.log(result);
       if(result.error == '') {
         formatDate(result.data).then((datas)=> {
           setDisabled(datas);
@@ -67,17 +84,16 @@ const ReservationAddScreen: React.FC<Props> = ({route, navigation}) => {
       Alert.alert('Erro', 'Algo deu errado.')
     }
   };
-  const getTimes = async () => {
+
+  const getTimes = async (data: string) => {
     try {
-      const result = await getReservationsTime(id);
-      console.log(result);
+      const result = await getReservationsTime(id, data);
       if(result.error == '') {
         setSelectedTime('');
         setTimeList(result.data);
       }
       
     } catch (error) {
-      console.log(error);
       Alert.alert("Erro", "Algo deu errado.")
     }
   }
@@ -87,24 +103,23 @@ const ReservationAddScreen: React.FC<Props> = ({route, navigation}) => {
       });
       getDisabled();
   },[navigation, route]);
-  useEffect(()=>{
-    getTimes();
-  }, [selectedDate])
   
   const minDate = new Date();
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + 3);
   const handleDateChange = (date: Moment): void => {
-    // const dateEl = new Date(date.toString());
-    // const year = String(dateEl.getFullYear());
-    // const month = String(dateEl.getMonth() + 1).padStart(2, '0');
-    // const day = String(dateEl.getDate()).padStart(2, '0');
     const formated = new Date(date.toString());
-  
-    setSelectedDate(formated.toLocaleDateString('pt-BR', {
+    
+    const newData = formated.toLocaleDateString('pt-BR', {
       timeZone: 'UTC',
-    }));
-    ref?.current?.scrollToEnd();
+    })
+
+    setSelectedDate(newData);
+    getTimes(newData.split('/').reverse().join('-'));
+    setTimeout(()=>{
+      ref?.current?.scrollToEnd();
+    }, 500)
+    
   }
   return(
     <C.Container>
