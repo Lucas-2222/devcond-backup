@@ -9,6 +9,8 @@ export type lostData = {
   where: string;
   photo: string;
   dateCreated: string;
+  status: string;
+  id: string;
 }
 
 export type recData = {
@@ -16,8 +18,6 @@ export type recData = {
   where: string;
   photo: string;
   dateCreated: string;
-  descriptionRec: string;
-  whereRec: string;
-  photoRec: string;
-  dateCreatedRec: string;
+  status: string;
+  id: string;
 }

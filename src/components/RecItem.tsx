@@ -30,21 +30,21 @@ const InfoText = styled.Text`
 const InfoTitle = styled.Text`
   font-weight: bold;
   color: #CCC;
-  margin: 0 10px 10px 10px;
+  margin: 0 10px 10px  10px;
 `;
 
 const RecItem = ({item}: {item: recData}): JSX.Element =>{
 
   return(
     <Box>
-      <Photo source={{uri: item.photoRec}} />
-      <Title>{item.descriptionRec}</Title>
+      <Photo source={{uri: item.photo}} resizeMode='contain'/>
+      <Title>{item.description}</Title>
 
       <InfoTitle>Encontrado em:</InfoTitle>
-      <InfoText>{item.whereRec}</InfoText>
+      <InfoText>{item.where}</InfoText>
 
       <InfoTitle>Data: </InfoTitle>
-      <InfoText>{item.dateCreatedRec}</InfoText>
+      <InfoText>{item.dateCreated}</InfoText>
 
 
 

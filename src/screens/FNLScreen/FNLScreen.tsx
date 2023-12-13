@@ -8,6 +8,7 @@ import { ServicesFNL } from './FNLScreen.services';
 import { lostData, recData } from './FNLScreen.types';
 import LostItem from '../../components/LostItem';
 import RecItem from '../../components/RecItem';
+import Icon  from 'react-native-vector-icons/FontAwesome';
 
 type Props = NativeStackScreenProps<any>
 
@@ -21,11 +22,19 @@ const FNLScreen: React.FC<Props> = ({navigation, route}) => {
 
 	useEffect(()=>{
 		navigation.setOptions({
-			headerTitle: 'Achados e Perdidos'
+			headerTitle: 'Achados e Perdidos',
+			headerRight: () => (
+				<C.AddButton onPress={handleAddItem}>
+					<Icon name="plus" size={24} color="#000" />
+				</C.AddButton>
+			)
 		});
 		getFnl();
 	}, [])
 
+	const handleAddItem = () => {
+		navigation.navigate('FNLAddScreen');
+	}
 	
 
 	const getFnl = async () => {
@@ -64,7 +73,7 @@ const FNLScreen: React.FC<Props> = ({navigation, route}) => {
 						showsHorizontalScrollIndicator={false}
 					>
 						{lostList?.map((item, index)=>(
-							<LostItem {...{item,index}}/>
+							<LostItem item={item} index={index} refresing={getFnl}/>
 						))}
 					</C.ObjectScroller>
 					</>

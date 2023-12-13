@@ -8,8 +8,10 @@ const ServicesFNL = {
     let json = await request<Fnl>('get', '/foundandlost', {})
     return json;
   },
-  putFnl: async (id: string): Promise<recData> => {
-    let json = await request<recData>('put', `/foundandlost/${id}`, {})
+  putFnl: async (id: string): Promise<Fnl> => {
+    let json = await request<Fnl>('put', `/foundandlost/${id}`, {
+      status: 'recovered'
+    })
     return json;
   }
 }

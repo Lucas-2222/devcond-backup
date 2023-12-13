@@ -1,13 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Docs } from '../contexts/StateContext';
-import { Linking } from 'react-native';
-import api from '../services/api';
-import { Link, LinkingContext } from '@react-navigation/native';
 import { lostData } from '../screens/FNLScreen/FNLScreen.types';
 import { ServicesFNL } from '../screens/FNLScreen/FNLScreen.services';
-import { Alert } from 'react-native/Libraries/Alert/Alert';
+import { Alert } from 'react-native';
 
 const Box = styled.View`
   width: 200px;
@@ -49,7 +45,7 @@ const ButtonText = styled.Text`
   margin-left: 10px;
 `;
 
-const LostItem = ({item}: {item: lostData}): JSX.Element =>{
+const LostItem = ({ item, index, refresing }: { item: lostData; index: number, refresing: ()=> Promise<void> }): JSX.Element =>{
 
   const { putFnl } = ServicesFNL;
 
@@ -66,11 +62,14 @@ const LostItem = ({item}: {item: lostData}): JSX.Element =>{
   };
 
   const handleSetRec = async () => {
-    try {
-      const result = await putFnl(id); 
-    } catch (error) {
+      const result = await putFnl(item.id);
+      if(result.error === '') {
+        refresing();
+       Alert.alert('Pegue seu item perdido na portaria.')
+      } else {
+        Alert.alert(result.error)
+      }
       
-    }
   }
 
   return(

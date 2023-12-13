@@ -11,6 +11,7 @@ import { ReservationScreen } from "../screens/ReservationScreen";
 import { ReservationAddScreen } from "../screens/ReservationAddScreen";
 import { ReservationMyScreen } from "../screens/ReservationMyScreen";
 import { FNLScreen } from "../screens/FNLScreen";
+import FNLAddScreen from "../screens/FNLAddScreen/FNLAddScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -66,6 +67,10 @@ const MainDrawer = () => {
       <Drawer.Screen 
         name='FNLScreen'
         component={FNLScreen}
+      />
+      <Drawer.Screen 
+        name="FNLAddScreen"
+        component={FNLAddScreen}
       />
     </Drawer.Navigator>
   );
